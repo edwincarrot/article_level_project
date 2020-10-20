@@ -1,0 +1,20 @@
+var fs = require("fs");
+var textlist = fs.readFileSync("textlist.txt","utf8").split("\n");
+var stopword = fs.readFileSync("stopword.txt","utf8").split("\n");
+var wordfreq = {};
+for(var i = 0; i < textlist.length; i++){
+	var wordlist = fs.readFileSync(textlist[i], "utf8").split(" ");
+	for(var j = 0; j < wordlist.length; j++){
+		var word = wordlist[j].toLowerCase().replace(/[\.+;:,"“”']/,"");
+		//console.log(word);
+		if(stopword.indexOf(word) == -1){
+			if(typeof(wordfreq[word]) == 'undefined'){
+				wordfreq[word] = 1;
+			} else{
+				wordfreq[word]++;
+			}
+		}
+	}
+}
+
+console.log(wordfreq);
